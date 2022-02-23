@@ -1,0 +1,99 @@
+```{bash}
+combine both 'runs'
+for i in ./barcode*;
+do bn=$(basename $i );
+mv ${bn} ../../../../20211216_1317_MN23913_FAR27359_f42a3dea/fastq_hac/split_demultiplexed_pass/${bn}/${bn}/;
+done
+
+moved barcode19, 56, 68 manually
+
+for i in barcode*;
+do bn=$(basename $i);
+cp ${bn}/${bn}/${bn}/*.fastq ./${bn};
+done
+
+#convert to fasta
+for i in barcode*/*.fastq; do sed -n '1~4s/^@/>/p;2~4p' $i > $i.fasta; done
+
+#NOpaste into one big doc
+#cat barcode*/*.fasta >> all_swab.fasta
+
+#DO INSTEAD: make one fasta for each barcode
+for i in barcode*;
+do bn=$(basename $i);
+cat ./${bn}/*.fasta >> ./${bn}/${bn}.fasta;
+done
+
+#mv to analysis dir
+for i in barcode*;
+do bn=$(basename $i);
+mv ./${bn}/${bn}.fasta ~/Documents/CM_aiv_detection_environment/;
+done
+
+
+#generate report - ?
+wc -l *.fasta | awk '{print $1/2" " $2}' | sed '$d'  >> demultiplexing_by_sample.txt
+
+#make blast database
+makeblastdb -in AllFluGenomicFastaResults.fasta -dbtype nucl -out new_all_avian_flu
+
+#from aiv script:
+#This command uses GNU parallel to conduct BLAST searches in parallel for each demultiplexed file
+#First looking at forward read files
+ls forward_*.fasta | awk -F'[.]' '{print $1}'| parallel -j+0 --eta 'blastn -db all_avian_flu -query {.}.fasta -out {.}.out  -max_target_seqs 1 -outfmt 6'
+
+
+#for loop blast code ... not parallel though...
+for i in barcode*.fasta; 
+do bn=$(basename $i .fasta)
+blastn -db new_all_avian_flu -query ${bn}*.fasta -out ${bn}.out -max_target_seqs 1 -outfmt 6';
+done
+
+
+#final blast code:
+ls barcode*.fasta | awk -F'[.]' '{print $1}'| parallel -j+0 --eta 'blastn -db new_all_avian_flu -query {.}.fasta -out {.}.out  -max_target_seqs 1 -outfmt 6'
+ 
+
+#SKIP: Export info to our running report
+#wc -l *.out >> demultiplexing_assignment_report.txt
+
+#Now add the number of reads matching the avian flu database to the file avian_blast_matches.txt
+wc -l *.out | awk '{print $1" " $2}' | sed '$d' > avian_blast_matches.txt
+
+
+#for all of them:
+
+
+#Finally look up metadata for the closest blast matches for each read
+#Now use the .out files to generate a list of GI's to lookup against database
+
+for file in *.out; 
+do awk '{print $2}' $file | awk -F ":" '{print $2}' | awk -F "|" '{print $1}' > ${file%.out}.tmp;
+done
+
+#Use that file to get matches from the database
+for file in *.tmp; 
+do grep -f $file data/AllFluGenomicFastaResults.fasta > "${file%.out}.tab";
+done
+
+
+
+
+
+
+
+
+
+rename *.out files:
+
+while read -r line; do
+   value1=$(echo "$line"| awk -F" "  '{print $1}')
+   value2=$(echo "$line"| awk -F" "  '{print $2}')
+   cp ${value1}.out ${value2}.out
+done < renaming.csv
+
+
+
+
+
+```
