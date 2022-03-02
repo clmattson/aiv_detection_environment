@@ -1,7 +1,12 @@
 # Analysis of MinION sequence data from water and sediment samples for avian influenza detection in California wetlands
 
+#first, retrieve flu db file AllFluGenomicFastaResults.fasta.gz
 #start with CM_blast_notes.rmd
+
 #then use CM_aiv_detection_analysis.R 
+
+
+
 
 If you are reading or using this, let us know how these data were useful for you. If you use these data and code, please cite the repository or the paper. Always open to collaborate! Please contact us!
 
