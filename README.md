@@ -1,14 +1,13 @@
 # Analysis of MinION sequence data from water and sediment samples for avian influenza detection in California wetlands
 
-This github repository includes code (and links to data) from the manuscript:  
-"A comparison of amplification methods to detect Avian Influenza viruses in California wetlands targeted via remote sensing of waterfowl"  
-Madeline M. McCuen | Maurice E. Pitesky | Jeff J. Buler | Sarai Acosta | Alexander Wilcox | Ronald F. Bond | Samuel L. Díaz-Muñoz
+#start with CM_blast_notes.rmd
+#then use CM_aiv_detection_analysis.R 
 
 If you are reading or using this, let us know how these data were useful for you. If you use these data and code, please cite the repository or the paper. Always open to collaborate! Please contact us!
 
 ### Quick Start
 1. Make sure packages are installed (see #2 below)
-2. git clone https://github.com/sociovirology/aiv_detection_environment.git
+2. git clone https://github.com/clmattson/aiv_detection_environment.git
 3. chmod +x minion_demultiplexing_flu_assignment.sh
 4. ./minion_demultiplexing_flu_assignment.sh
 5. Rscript aiv_detection_environment_analysis.R (or load interactively in R)
