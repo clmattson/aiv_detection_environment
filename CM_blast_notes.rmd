@@ -203,18 +203,16 @@ Done in 290421 ms.
 
 
 #combine both 'runs'
-#from within no_sample.../fastq_sac/demultiplexed_pass
+#from within no_sample.../fastq_sac/demultiplexed_split_pass
 for i in ./barcode*;
 do bn=$(basename $i );
-mv ${bn}/*.fastq ../../../../20211216_1317_MN23913_FAR27359_f42a3dea/fastq_sac/split_demultiplexed_pass/${bn}/;
+cp ${bn}/*.fastq ../../../../20211216_1317_MN23913_FAR27359_f42a3dea/fastq_sac_cd/demultiplexed_split_pass/${bn}/;
 done
 
-moved barcode19, 56, 68 manually
+moved barcode19, 19, 68 manually
 
-for i in barcode*;
-do bn=$(basename $i);
-cp ${bn}/${bn}/${bn}/*.fastq ./${bn};
-done
+ cp ./barcode68/ ../../../../20211216_1317_MN23913_FAR27359_f42a3dea/fastq_sac_cd/demultiplexed_split_pass/ -r
+ cp ./barcode19/ ../../../../20211216_1317_MN23913_FAR27359_f42a3dea/fastq_sac_cd/demultiplexed_split_pass/ -r
 
 #convert to fasta
 for i in barcode*/*.fastq; do sed -n '1~4s/^@/>/p;2~4p' $i > $i.fasta; done
@@ -243,10 +241,6 @@ makeblastdb -in AllFluGenomicFastaResults.fasta -dbtype nucl -out new_all_avian_
 
 #from aiv script:
 #This command uses GNU parallel to conduct BLAST searches in parallel for each demultiplexed file
-#First looking at forward read files
-ls forward_*.fasta | awk -F'[.]' '{print $1}'| parallel -j+0 --eta 'blastn -db all_avian_flu -query {.}.fasta -out {.}.out  -max_target_seqs 1 -outfmt 6'
-
-
 #for loop blast code ... not parallel though...
 for i in barcode*.fasta; 
 do bn=$(basename $i .fasta)
