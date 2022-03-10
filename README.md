@@ -1,6 +1,17 @@
 # Analysis of MinION sequence data from water and sediment samples for avian influenza detection in California wetlands
 
-#first, retrieve flu db file AllFluGenomicFastaResults.fasta.gz
+#first, clone this repo
+
+#second, navigate to  retrieve CM_aiv_detection_environment_supporting_files (local). Within this dir: 
+    #raw_fastas: contains .fasta with all reads per barcode
+    #flu_blast_db contains blast db files and most recent .fasta from fluDB (AllFluGenomicFastaResults.fasta.gz)
+    #blast_results contains all .out, .tmp, and .tab files for each barcode
+    
+#__to work thru everything I've done so far__, retrieve flu db file AllFluGenomicFastaResults.fasta.gz from CM_aiv_detection_environment_supporting_files/flu_blast_db AND all barcode*.fasta files from CM_aiv_detection_environment_supporting_files/raw_fastas. Copy all into main directory.
+
+#__to start analyzing data in R:__
+#retrieve all .out and .tab files from CM_aiv_detection_environment_supporting_files/blast_results. copy all into the main directory
+
 #start with CM_blast_notes.rmd
 
 #then use CM_aiv_detection_analysis.R 
