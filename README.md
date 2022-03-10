@@ -7,10 +7,13 @@
     #flu_blast_db contains blast db files and most recent .fasta from fluDB (AllFluGenomicFastaResults.fasta.gz)
     #blast_results contains all .out, .tmp, and .tab files for each barcode
     
-#__to work thru everything I've done so far__, retrieve flu db file AllFluGenomicFastaResults.fasta.gz from CM_aiv_detection_environment_supporting_files/flu_blast_db AND all barcode*.fasta files from CM_aiv_detection_environment_supporting_files/raw_fastas. Copy all into main directory.
+#__to work thru everything I've done so far__: 
+#retrieve flu db file AllFluGenomicFastaResults.fasta.gz from CM_aiv_detection_environment_supporting_files/flu_blast_db AND all barcode*.fasta files from CM_aiv_detection_environment_supporting_files/raw_fastas. Copy all into main directory.
+#then delete demultiplexing_by_sample.txt and avian_blast_matches.txt to start fresh.
 
 #__to start analyzing data in R:__
 #retrieve all .out and .tab files from CM_aiv_detection_environment_supporting_files/blast_results. copy all into the main directory
+
 
 #start with CM_blast_notes.rmd
 
